@@ -23,7 +23,7 @@ Here's a walkthrough of implemented user stories:
 
 <img src='app-walkthrough.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
-GIF created with [LiceCap](http://www.cockos.com/licecap/).
+GIF created with [GIPHYCAPTURE](https://apps.apple.com/us/app/giphy-capture-the-gif-maker/id668208984?mt=12).
 ## License
 
     Copyright [2021] [MIT]

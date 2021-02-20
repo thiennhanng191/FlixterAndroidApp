@@ -3,34 +3,50 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp">
 
     <ImageView
-        android:id="@+id/itemViewMoviePoster"
+        android:id="@+id/ivMoviePoster"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/textViewMovieTitle"
+        android:id="@+id/tvMovieTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
-        android:layout_toEndOf="@+id/itemViewMoviePoster"
+        android:layout_toEndOf="@+id/ivMoviePoster"
         android:text="The Little Things"
         android:textSize="24sp" />
 
     <TextView
-        android:id="@+id/textViewMovieOverview"
+        android:id="@+id/tvMovieYear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textViewMovieTitle"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_toEndOf="@+id/itemViewMoviePoster"
-        android:text="Deputy Sheriff Joe \&quot;Deke\&quot; Deacon joins forces with Sgt. Jim Baxter to search for a serial killer who's terrorizing Los Angeles. As they track the culprit, Baxter is unaware that the investigation is dredging up echoes of Deke's past, uncovering disturbing secrets that could threaten more than his case." />
+        android:layout_below="@+id/tvMovieTitle"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@+id/ivMoviePoster"
+        android:text="2020"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvMovieRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvMovieYear"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@+id/ivMoviePoster"
+        android:text="Rated 6.5 from 100 users"
+        android:textSize="14sp" />
 
 </RelativeLayout>

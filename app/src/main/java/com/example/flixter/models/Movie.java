@@ -12,12 +12,20 @@ public class Movie {
     String posterPath;
     String title;
     String overview;
+    String id;
+    String releasedYear;
+    String voteAverage;
+    String voteCount;
 
     public Movie(JSONObject jsonObject) throws JSONException {
         backdropPath = jsonObject.getString("backdrop_path");
         posterPath = jsonObject.getString("poster_path");
         title = jsonObject.getString("title");
         overview = jsonObject.getString("overview");
+        id = "" + jsonObject.getInt("id");
+        releasedYear = jsonObject.getString("release_date").substring(0,4);
+        voteAverage = jsonObject.getString("vote_average");
+        voteCount = jsonObject.getString("vote_count");
     }
 
     /*
@@ -47,4 +55,16 @@ public class Movie {
     public String getOverview() {
         return overview;
     }
+
+    public String getId() { return id; }
+
+    public String getReleasedYear() {
+        return releasedYear;
+    }
+
+    public String getVoteAverage() { return voteAverage; }
+
+    public String getVoteCount() { return voteCount; }
+
+
 }

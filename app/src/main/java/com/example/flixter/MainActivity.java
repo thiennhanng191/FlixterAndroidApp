@@ -20,6 +20,7 @@ import com.example.flixter.models.Movie;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnCl
     public void onItemClicked(int position) {
         Intent intent = new Intent(MainActivity.this, MovieDetailsActivty.class);
         intent.putExtra("MOVIE_ID", movies.get(position).getId());
+        intent.putExtra("movie", Parcels.wrap(movies.get(position)));
         startActivity(intent);
 
     }

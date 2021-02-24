@@ -2,10 +2,12 @@ package com.example.flixter.adapters;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -54,6 +56,7 @@ public class MovieDetailsAdapter extends RecyclerView.Adapter<MovieDetailsAdapte
         TextView tvMovieReleasedYear;
         TextView tvMovieRating;
         ImageView ivMoviePoster;
+        RatingBar ratingBar;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -62,6 +65,7 @@ public class MovieDetailsAdapter extends RecyclerView.Adapter<MovieDetailsAdapte
             tvMovieOverview = itemView.findViewById(R.id.tvMovieDetailsOverview);
             tvMovieRating = itemView.findViewById(R.id.tvMovieDetailsRating);
             ivMoviePoster = itemView.findViewById(R.id.ivMoviePoster);
+            ratingBar = itemView.findViewById(R.id.ratingBar);
         }
 
         public void bind(Movie movie) {
@@ -69,7 +73,8 @@ public class MovieDetailsAdapter extends RecyclerView.Adapter<MovieDetailsAdapte
             tvMovieOverview.setText(movie.getOverview());
             tvMovieReleasedYear.setText(movie.getReleasedYear());
             tvMovieRating.setText("Average rating " + movie.getVoteAverage() + " from " + movie.getVoteCount() + " users");
-
+            ratingBar.setNumStars(5);
+            ratingBar.setRating(Float.parseFloat(movie.getVoteAverage())/2);
 
             String imageUrl;
             int placeHolder;

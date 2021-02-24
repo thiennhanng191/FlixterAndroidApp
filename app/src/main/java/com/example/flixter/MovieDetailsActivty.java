@@ -20,6 +20,7 @@ import com.example.flixter.models.Movie;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +47,7 @@ public class MovieDetailsActivty extends AppCompatActivity {
         }
         catch (NullPointerException e){}
 
+        Movie movie = Parcels.unwrap(getIntent().getParcelableExtra("movie"));
 
         // Set title to false AFTER toolbar has been set -- remove app's name from menu bar
         try

@@ -19,6 +19,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "TMDB_API_KEY", apikeyProperties['TMDB_API_KEY'])
+        buildConfigField("String", "YOUTUBE_API_KEY", apikeyProperties['YOUTUBE_API_KEY'])
 
     }
 
@@ -41,6 +42,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.navigation:navigation-fragment:2.2.2'
     implementation 'androidx.navigation:navigation-ui:2.2.2'
+    implementation files('libs/YouTubeAndroidPlayerApi.jar')
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

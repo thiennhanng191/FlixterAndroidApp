@@ -16,6 +16,10 @@ import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.flixter.adapters.MovieAdapter;
 import com.example.flixter.adapters.MovieDetailsAdapter;
 import com.example.flixter.models.Movie;
+import com.google.android.youtube.player.YouTubeBaseActivity;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,10 +31,13 @@ import java.util.List;
 
 import okhttp3.Headers;
 
-public class MovieDetailsActivty extends AppCompatActivity {
+public class MovieDetailsActivty extends YouTubeBaseActivity {
     public static String movieId;
     public static String MOVIE_DETAILS_URL;
+    public static String VIDEOS_URL;
     public static final String TAG = "MovieDetailsActivity";
+    private static final String YOUTUBE_API_KEY = "" + BuildConfig.YOUTUBE_API_KEY;
+    YouTubePlayerView youtubePlayerView;
 
     List<Movie> movies;
 
@@ -38,23 +45,31 @@ public class MovieDetailsActivty extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movies_details);
+        youtubePlayerView = (YouTubePlayerView) findViewById(R.id.player);
+
         RecyclerView rvMoviesDetails = findViewById(R.id.rvMoviesDetails);
         movies = new ArrayList<>();
 
         try {
             movieId = getIntent().getExtras().getString("MOVIE_ID");
             MOVIE_DETAILS_URL = "https://api.themoviedb.org/3/movie/"+ movieId + "?api_key=" + BuildConfig.TMDB_API_KEY;
+            VIDEOS_URL = "https://api.themoviedb.org/3/movie/"+ movieId + "/videos?api_key=" + BuildConfig.TMDB_API_KEY;
+
         }
         catch (NullPointerException e){}
 
         Movie movie = Parcels.unwrap(getIntent().getParcelableExtra("movie"));
 
+
         // Set title to false AFTER toolbar has been set -- remove app's name from menu bar
+        /*
         try
         {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
         catch (NullPointerException e){}
+
+         */
 
         // Create the adapter
         MovieDetailsAdapter movieDetailsAdapter = new MovieDetailsAdapter(this, movies);
@@ -66,6 +81,34 @@ public class MovieDetailsActivty extends AppCompatActivity {
         rvMoviesDetails.setLayoutManager(new LinearLayoutManager(this));
 
         AsyncHttpClient client = new AsyncHttpClient();
+
+        client.get(VIDEOS_URL,new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int i, Headers headers, JSON json) {
+                try {
+                    JSONArray results = json.jsonObject.getJSONArray("results");
+                    if (results.length() == 0) {
+                        return;
+                    } else {
+                        String youtubeKey = results.getJSONObject(0).getString("key");
+                        Log.d("DetailActivity", youtubeKey);
+
+                        initializeYoutube(youtubeKey);
+
+                    }
+                } catch (JSONException e) {
+                    Log.e("DetailActivity", "Failed to parse JSON", e);
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailure(int i, Headers headers, String s, Throwable throwable) {
+                Log.d(TAG, "onFailure");
+            }
+        });
 
         client.get(MOVIE_DETAILS_URL, new JsonHttpResponseHandler() {
             @Override
@@ -83,7 +126,6 @@ public class MovieDetailsActivty extends AppCompatActivity {
                 }
                 movieDetailsAdapter.notifyDataSetChanged();
 
-
                 try {
                     Log.i(TAG, "Results: " + jsonObject.getString("original_title"));
 
@@ -99,9 +141,28 @@ public class MovieDetailsActivty extends AppCompatActivity {
             }
         });
 
+        /*
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+        */
+    }
 
+    private void initializeYoutube(final String youtubeKey) {
+        youtubePlayerView.initialize(YOUTUBE_API_KEY, new YouTubePlayer.OnInitializedListener() {
+
+            @Override
+            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+                Log.d("DetailActivity", "onInitializationSuccess");
+                // do any work here to cue video, play video, etc.
+                youTubePlayer.cueVideo(youtubeKey);
+            }
+
+            @Override
+            public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+                Log.d("DetailActivity", "onInitializationFailure");
+
+            }
+        });
     }
 
     @Override

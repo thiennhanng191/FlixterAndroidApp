@@ -95,7 +95,6 @@ public class MovieDetailsAdapter extends RecyclerView.Adapter<MovieDetailsAdapte
                     .load(imageUrl)
                     .placeholder(placeHolder)
                     .error(placeHolder)
-                    .transform(new RoundedCornersTransformation(20,0))
                     .into(ivMoviePoster);
         }
     }

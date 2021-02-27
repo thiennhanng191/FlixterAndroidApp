@@ -51,26 +51,10 @@ public class MovieDetailsActivty extends YouTubeBaseActivity {
         RecyclerView rvMoviesDetails = findViewById(R.id.rvMoviesDetails);
         movies = new ArrayList<>();
 
-        try {
-            movieId = getIntent().getExtras().getString("MOVIE_ID");
-            MOVIE_DETAILS_URL = "https://api.themoviedb.org/3/movie/"+ movieId + "?api_key=" + BuildConfig.TMDB_API_KEY;
-            VIDEOS_URL = "https://api.themoviedb.org/3/movie/"+ movieId + "/videos?api_key=" + BuildConfig.TMDB_API_KEY;
-
-        }
-        catch (NullPointerException e){}
-
         movie = Parcels.unwrap(getIntent().getParcelableExtra("movie"));
-
-
-        // Set title to false AFTER toolbar has been set -- remove app's name from menu bar
-        /*
-        try
-        {
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
-        }
-        catch (NullPointerException e){}
-
-         */
+        String movieId = movie.getId();
+        MOVIE_DETAILS_URL = "https://api.themoviedb.org/3/movie/"+ movieId + "?api_key=" + BuildConfig.TMDB_API_KEY;
+        VIDEOS_URL = "https://api.themoviedb.org/3/movie/"+ movieId + "/videos?api_key=" + BuildConfig.TMDB_API_KEY;
 
         // Create the adapter
         MovieDetailsAdapter movieDetailsAdapter = new MovieDetailsAdapter(this, movies);
@@ -110,36 +94,8 @@ public class MovieDetailsActivty extends YouTubeBaseActivity {
             }
         });
 
-        client.get(MOVIE_DETAILS_URL, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Headers headers, JSON json) {
-                Log.d(TAG, "onSuccess");
-                JSONObject jsonObject = json.jsonObject;
-
-                JSONArray results = new JSONArray();
-                results.put(jsonObject);
-
-                try {
-                    movies.addAll(Movie.fromJsonArray(results));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                movieDetailsAdapter.notifyDataSetChanged();
-
-                try {
-                    Log.i(TAG, "Results: " + jsonObject.getString("original_title"));
-
-                } catch (JSONException e) {
-                    Log.e(TAG, "Hit json exception", e);
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Headers headers, String s, Throwable throwable) {
-                Log.d(TAG, "onFailure");
-            }
-        });
+        movies.add(movie);
+        movieDetailsAdapter.notifyDataSetChanged();
 
         /*
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

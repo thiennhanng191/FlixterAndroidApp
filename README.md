@@ -1,29 +1,31 @@
-# CodePath Android University Assignment 1 - *Flixter*
+# CodePath Android University Assignment 2 - *Flixter*
 
 **Flixter** is an Android application that lets users view a list of movies sourced from The Movie Database API.
 Submitted by: **Nhan Nguyen**
 
 The following **required** functionality is completed:
 
-* [x] User can view a list of movies (title, poster image,released year, ratings and overview) currently playing in theaters from the Movie Database API.
-* [x] Project set-up with use of the AsyncHttpClient and the Glide libraries.
+* [x] Expose details of movie (ratings using RatingBar, popularity, and synopsis) in a separate activity.
+* [x] Allow video posts to be played in full-screen using the YouTubePlayerView.
 
 The following **optional** features are implemented:
-* [x] Add another activity for displaying movie details, where user can see the movie's overview. 
-* [x] Views are responsive for both landscape and portrait mode - poster shown in portrait mode and backdrop image shown in landscape mode. 
-* [x] Display a default placeholder graphic for each image during loading and error image.
-* [x] Change the default theme into dark mode.
-* [x] Improved user interface 
-* [x] Add a divider between movie items
-* [x] Hide API key
+* [x] Trailers for popular movies are played automatically when the movie is selected.
+  * [x] When clicking on a popular movie (i.e. a movie voted for more than 5 stars) the video should be played immediately.
+  * [x] Less popular videos rely on the detailed page should show an image preview that can initiate playing a YouTube video.
+* [x] Added ScrollView to the Movie Details Activity. 
+* [x] Improved the UI in the Movie Details Activity. 
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-<img src='app-walkthrough.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='app-walkthrough-assignment2.gif' title='Video Walkthrough Assignment 2' width='' alt='Video Walkthrough Assignment 2' />
 
 GIF created with [GIPHY Capture](https://apps.apple.com/us/app/giphy-capture-the-gif-maker/id668208984?mt=12).
+
+### Notes:
+- Since my MovieDetailsActivity has to extend YouTubeBaseActivity instead of AppCompatActivity, I could not call setSupportActionBar() to implement the toolbar. For that same reason, I could not call supportFinishAfterTransition() function to implemenet a shared element transition like the way the instruction did. 
+
 ## License
 
     Copyright [2021] [MIT]

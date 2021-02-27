@@ -37,6 +37,7 @@ public class MovieDetailsActivty extends YouTubeBaseActivity {
     public static String VIDEOS_URL;
     public static final String TAG = "MovieDetailsActivity";
     private static final String YOUTUBE_API_KEY = "" + BuildConfig.YOUTUBE_API_KEY;
+    private static Movie movie;
     YouTubePlayerView youtubePlayerView;
 
     List<Movie> movies;
@@ -58,7 +59,7 @@ public class MovieDetailsActivty extends YouTubeBaseActivity {
         }
         catch (NullPointerException e){}
 
-        Movie movie = Parcels.unwrap(getIntent().getParcelableExtra("movie"));
+        movie = Parcels.unwrap(getIntent().getParcelableExtra("movie"));
 
 
         // Set title to false AFTER toolbar has been set -- remove app's name from menu bar
@@ -101,7 +102,6 @@ public class MovieDetailsActivty extends YouTubeBaseActivity {
                     Log.e("DetailActivity", "Failed to parse JSON", e);
                     e.printStackTrace();
                 }
-
             }
 
             @Override
@@ -153,8 +153,14 @@ public class MovieDetailsActivty extends YouTubeBaseActivity {
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
                 Log.d("DetailActivity", "onInitializationSuccess");
-                // do any work here to cue video, play video, etc.
-                youTubePlayer.cueVideo(youtubeKey);
+
+                if (Float.parseFloat(movie.getVoteAverage()) >= 5) {
+                    youTubePlayer.loadVideo(youtubeKey);
+                    youTubePlayer.play();
+                } else {
+                    youTubePlayer.cueVideo(youtubeKey);
+
+                }
             }
 
             @Override

@@ -2,6 +2,7 @@ package com.example.flixter;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
 
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
@@ -54,8 +56,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnCl
         // Set a Layout Manager on the recycler view
         rvMovies.setLayoutManager(new LinearLayoutManager(this));
 
-        RecyclerView.ItemDecoration itemDecoration = new
-                DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         rvMovies.addItemDecoration(itemDecoration);
 
         AsyncHttpClient client = new AsyncHttpClient();
@@ -94,7 +95,9 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.OnCl
         Intent intent = new Intent(MainActivity.this, MovieDetailsActivty.class);
         intent.putExtra("MOVIE_ID", movies.get(position).getId());
         intent.putExtra("movie", Parcels.wrap(movies.get(position)));
+        // View ivMoviePoster = findViewById(R.id.ivMoviePoster);
+        // ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, (View)ivMoviePoster, "poster");
         startActivity(intent);
-
-    }
+        // startActivity(intent, options.toBundle());
+     }
 }

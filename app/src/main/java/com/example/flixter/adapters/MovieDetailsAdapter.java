@@ -19,6 +19,8 @@ import com.example.flixter.models.Movie;
 
 import java.util.List;
 
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+
 public class MovieDetailsAdapter extends RecyclerView.Adapter<MovieDetailsAdapter.ViewHolder> {
     Context context;
     List<Movie> movies;
@@ -87,12 +89,13 @@ public class MovieDetailsAdapter extends RecyclerView.Adapter<MovieDetailsAdapte
                 placeHolder = R.drawable.placeholder_verticle;
             }
             //displaying image with Glide
-            Glide.with(context).load(imageUrl).into(ivMoviePoster);
+            // Glide.with(context).load(imageUrl).into(ivMoviePoster);
 
             Glide.with(context)
                     .load(imageUrl)
                     .placeholder(placeHolder)
                     .error(placeHolder)
+                    .transform(new RoundedCornersTransformation(20,0))
                     .into(ivMoviePoster);
         }
     }
